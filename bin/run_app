@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+#!/usr/bin/env ruby
+
+require_relative '../lib/extract_from_google'
+
+file_path = ARGV[0] || 'files/van-gogh-paintings.html'
+paintings = ExtractFromGoogle.extract_picture_data_via_nokogiri(file_path)
+
+puts paintings.inspect

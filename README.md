@@ -1,28 +1,69 @@
 # Extract Van Gogh Paintings Code Challenge
 
-Goal is to extract a list of Van Gogh paintings from the attached Google search results page.
+Based on [this challenge](https://github.com/serpapi/code-challenge)
 
-![Van Gogh paintings](https://github.com/serpapi/code-challenge/blob/master/files/van-gogh-paintings.png?raw=true "Van Gogh paintings")
+This code provides three functional examples of extracting carousel data [ name, extensions, link, image ]\*.
 
-## Instructions
+Examples include : 
 
-This is already fully supported on SerpApi. ([relevant test], [html file], [sample json], and [expected array].)
-Try to come up with your own solution and your own test.
-Extract the painting `name`, `extensions` array (date), and Google `link` in an array.
+- A. Van Gogh, 
+- B. Similar Artists, 
+- C. Similar Activists
 
-Fork this repository and make a PR when ready.
+![Van Gogh Paints](files/van-gogh-paints.png)
+![Similar Artists](files/similar_artists.png)
+![Similar Activists](files/similar_activists.png)
 
-Programming language wise, Ruby (with RSpec tests) is strongly suggested but feel free to use whatever you feel like.
+# Installation
 
-Parse directly the HTML result page ([html file]) in this repository. No extra HTTP requests should be needed for anything.
+**Ruby Version 3.1.4**
 
-[relevant test]: https://github.com/serpapi/test-knowledge-graph-desktop/blob/master/spec/knowledge_graph_claude_monet_paintings_spec.rb
-[sample json]: https://raw.githubusercontent.com/serpapi/code-challenge/master/files/van-gogh-paintings.json
-[html file]: https://raw.githubusercontent.com/serpapi/code-challenge/master/files/van-gogh-paintings.html
-[expected array]: https://raw.githubusercontent.com/serpapi/code-challenge/master/files/expected-array.json
+```bash
+rvm use 3.1.4
+bundle
+```
 
-Add also to your array the painting thumbnails present in the result page file (not the ones where extra requests are needed). 
+# Stack 🚀
 
-Test against 2 other similar result pages to make sure it works against different layouts. (Pages that contain the same kind of carrousel. Don't necessarily have to be paintings.)
+- Ruby: Core Programming Language
+- Nokogiri: HTML Parsing
+- Selenium: Headless browsing
+- Rspec: Testing Framework
+- Rubocop: Linting
 
-The suggested time for this challenge is 4 hours. But, you can take your time and work more on it if you want.
+# Usage 💻
+
+```bash
+ruby bin/run_app
+ruby bin/run_app files/manet_search.htm
+# Or pass entire URL's!
+ruby bin/run_app "https://www.google.com/search?sca_esv=70115b77c1e466d4&sxsrf=ADLYWIIQJuhaXRiHSCvUb_HAdHbxWshibA:1723636371110&si=ACC90nyVMShfJvk8i3iWUVpAMs2eabUwkd2j7s8zokOoe90DvY6az6Q6vIkMhJnm44g4flxYw_Fqw2Js4nbV6C6JNDn6lsJzewEfPZlcZfbknuDDai8WInk2TH183Sk8Ju3a5Tlb28W94Y5JdiQ6Sm6o_2sNJAKyKl9iZ261A2ZH8TxKqw9oaojVvpGWRa3ajHeI9HtA1x-lT_hFqVDKELI6etiJKFdvcQSb7LmMTHbzBrhRbUYZ9NME4Z7oA7_OsKudpSbo1laQ&q=Claude+Monet+artwork&sa=X&ved=2ahUKEwjSxPzstfSHAxWimIkEHa1UKggQs9oBKAB6BAgUEAU&biw=1406&bih=863&dpr=2"
+```
+
+# Tests 📈
+
+```bash
+  bundle exec rspec
+```
+
+# Functionality 🌻
+
+### Nokogiri
+
+The main obstacle was getting the images to properly encode which only happens after load. I used a headless browser Selenium and Nokogiri to parse this content. The architecture is open to extension to other carousels and perhaps variant results by way of the module nokogiri_extractor.rb.
+
+### Regex Extractor
+
+This is a faster process but more apt to mishap that passes the same tests but does so via the embedded \<script\> tag before the page load. The benefit is in its speed, but it lacks the ability to properly present the final image encodings. So this feature should be considered a proof of concept and incomplete.
+
+# Index 🗃️
+
+- `bin` - Executables
+- `files` - Read files, images and json results
+- `lib` - Class files
+- `spec` - Testing general variants and parsing
+
+# Strategies 👊🏼
+
+- `Nokogiri` - More dependable than a Regex, but in some cases slower
+- `Regex` - Optional alternative
